@@ -1,0 +1,431 @@
+a {
+  /*all: unset;*/
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  display: flex;
+  /*flex-direction: column;*/
+  color: #172838;
+  background-color: #eef2f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  /*color: #ecf0f1;*/
+  padding: 10px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  width: 210px;
+  text-align: center;
+}
+
+.search-form {
+  position: relative;
+  display: inline-block;
+  width: 35%;
+}
+
+.search-form-input {
+  padding: 11px 50px 11px 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #eef2f5;
+}
+
+.search-form-input:focus {
+  outline: 2px solid #dadde1;
+}
+
+.search-form-button {
+  position: absolute;
+  padding: 10px 10px 7px ;
+  margin: 0;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+  border-radius: 50px;
+}
+
+.search-form-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.search-form-button:hover {
+  background-color: #dadde1;
+  border-radius: 50px;
+}
+
+/*------------------*/
+
+.container {
+  display: flex;
+  margin: 60px 0 0;
+  width: 100%;
+
+  /*position: fixed;*/
+}
+
+.catalog-content {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 250px);
+  margin-left: 250px;
+  padding: 20px 30px;
+  /*overflow-y: auto;*/
+  /*height: calc(100vh - 80px);*/
+}
+
+/*------------------*/
+
+.sidebar {
+  width: 250px;
+  background-color: white;
+  height: 100%;
+  position: fixed;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+
+  /*padding: 20px;*/
+}
+
+.list-categories {
+  list-style-type: none;
+  padding: 0;
+}
+
+.list-categories-item {
+  margin: 5px 20px;
+  padding: 10px 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  /*transition: background-color 0.3s ease, color 0.3s ease, cursor 0.3s ease;*/
+}
+
+.list-categories-item:hover,
+.list-categories-item.selected {
+  background-color: #dadde1;
+  color: black;
+  cursor: pointer;
+}
+
+/*------------------*/
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 2rem;
+  color: #007bff;
+  background-color: rgba(255, 255, 255, 0.8); /* Легка підкладка */
+}
+
+.catalog-grid {
+  overflow-y: auto;
+}
+
+.card {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: white;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  box-sizing: border-box;
+  border: 2px solid white;
+  transition: border 0.3s ease;
+}
+
+.card:hover {
+  border: 2px solid #172838;
+}
+
+.card-left {
+  flex: 1;
+  margin-right: 20px;
+}
+.card-right {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.card h2 {
+  margin-top: 0;
+  font-size: 18px;
+}
+.card .price {
+  color: #b12704;
+  font-size: 20px;
+  font-weight: bold;
+}
+.card .details {
+  margin-top: 10px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Кількість рядків */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card .images {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.card .images img {
+  width: 177px;
+  height: 177px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+.card .images img:last-child {
+  margin-right: 0;
+}
+
+@media (max-width: 1400px) {
+  .card .images img:nth-last-child(1),
+  .card .images img:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 1320px) {
+  .card .images img:nth-last-child(2),
+  .card .images img:nth-last-child(1),
+  .card .images img:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 1180px) {
+  .card .images img:nth-last-child(3),
+  .card .images img:nth-last-child(2),
+  .card .images img:nth-last-child(1),
+  .card .images img:last-child {
+    display: none;
+  }
+}
+
+.card .button {
+  position: absolute;
+  bottom: 0;
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 5px 20px;
+  color: #172838;
+  background-color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  border: 2px solid #172838;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.card .button:hover {
+  background-color: #172838;
+  color: white;
+}
+
+/*-----------------*/
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.pagination button,
+.pagination span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  margin: 0 5px;
+  box-shadow: 3px 3px 8px rgb(23, 40, 56), -3px -3px 8px rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  color: #172838;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.pagination button img,
+.pagination .triple-dot-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.pagination button:hover:not([disabled]),
+.pagination .page:hover {
+  background: #c3c5c8;
+}
+
+.pagination button.active,
+.pagination .page.active {
+  background-color: #172838;
+  color: white;
+}
+
+/*----------------*/
+
+.realty-container {
+  display: flex;
+  margin: 60px 0 0;
+  background: white;
+  height: calc(100vh - 60px);
+}
+
+.photos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 30px 20px 60px;
+}
+
+.photo-switcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.main-photo img {
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+}
+
+.thumbnails-wrapper {
+  overflow-x: scroll;
+  width: 450px;
+  margin-top: 10px;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 10px;
+}
+
+.thumbnail {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+}
+
+.thumbnail.selected {
+  border: 2px solid #000;
+}
+
+.arrow {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 100%;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.left-arrow {
+  position: absolute;
+  left: 0;
+  margin-left: 10px;
+}
+
+.right-arrow {
+  position: absolute;
+  right: 0;
+  margin-right: 10px;
+}
+
+.details {
+  margin: 0 60px 0 30px;
+  overflow: hidden;
+  flex-grow: 1; /* Дозволяє блоку details займати доступний простір */
+}
+
+.details .price {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #b12704;
+  font-weight: bold;
+}
+
+.description{
+  padding: 10px; /* Внутрішні відступи */
+  box-sizing: border-box; /* Враховуємо відступи у розмір блоку */
+  border: 1px solid #ddd; /* Рамка */
+}
+
+.expanded {
+  max-height: none;
+}
+
+.expand-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 20px;
+  color: #172838;
+  background-color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  border: 2px solid #172838;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.expand-button:hover {
+  background-color: #172838;
+  color: white;
+}
+
+.characteristic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /*max-height: calc(100vh - 200px);*/
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.characteristic-item label{
+  color: #172838;
+  font-weight: bold;
+}
