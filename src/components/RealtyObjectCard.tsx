@@ -32,7 +32,7 @@ function RealtyObjectCard({realty_object}: Props) {
             <div className="card-right">
                 <div className="images">
                     {realty_object.photos.slice(0, 4).map(item => (
-                        <img src={item.url} alt="Фото нерухомості"/>
+                        <img key={item.id} src={item.url} alt="Фото нерухомості"/>
                     ))}
                     {[...Array(Math.max(4 - realty_object.photos.length, 0))]
                         .map((_, index) => (

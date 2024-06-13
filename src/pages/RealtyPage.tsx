@@ -14,19 +14,12 @@ interface Realty {
     description: string;
     price: number;
     region: string;
-    condition: string;
     street: string;
-    section: string;
     floor: string;
     square: string;
     rooms: string;
     builder: string;
-    rc: string;
-    turn: string;
-    entrance: string;
     heating: string;
-    documents: string;
-    material_manufacture: string;
     location_type: string;
     settlement: string;
     house_type: string;
@@ -34,7 +27,6 @@ interface Realty {
     material_manufacture_2: string;
     communications: string;
     appointment: string;
-    features: string;
     tenants_object: string;
     comfort: string;
     realty_images: RealtyPhoto[];
@@ -73,10 +65,6 @@ function RealtyPage() {
         setSelectedPhotoIndex((prevIndex) =>
             prevIndex === realty!.realty_images.length - 1 ? 0 : prevIndex + 1
         );
-    };
-
-    const toggleDescription = () => {
-        setExpanded(!expanded);
     };
 
     const selectedPhoto = realty?.realty_images[selectedPhotoIndex];

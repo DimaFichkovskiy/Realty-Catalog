@@ -1,58 +1,47 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {RootState} from "./store";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-export interface Category {
-    id: string;
-    displayName: string;
+
+interface Category {
+    name_en: string;
+    name_urk: string;
 }
+
 
 interface CategoriesState {
-    list: Category[];
-    status: "idle" | "loading" | "succeeded" | "error"
-    error?: string
-}
-
-const allCategories: Category = {
-    id: "",
-    displayName: "All categories"
+    categories: Category[];
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
+    error: string | null;
 }
 
 const initialState: CategoriesState = {
-    list: [allCategories],
-    status: "idle",
-}
+    categories: [],
+    status: 'idle',
+    error: null,
+};
+
+export const fetchCategories = createAsyncThunk('categories/fetchCategories', async () => {
+    const response = await axios.get('http://0.0.0.0:8000/realty/categories');
+    return response.data.categories;
+});
 
 export const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
     reducers: {},
-    extraReducers(builder) {
+    extraReducers: (builder) => {
         builder
-            .addCase(loadCategories.pending, (state,) => {
-                state.status = "loading";
+            .addCase(fetchCategories.pending, (state) => {
+                state.status = 'loading';
             })
-            .addCase(loadCategories.fulfilled, (state, action) => {
-                state.status = "succeeded"
-                state.list = [allCategories, ...action.payload.map(transformCategory)]
+            .addCase(fetchCategories.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.categories = action.payload;
             })
-            .addCase(loadCategories.rejected, (state, action) => {
-                state.status = "error"
-                state.error = action.error.message
-            })
-    }
-})
+            .addCase(fetchCategories.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message || 'Failed to fetch categories';
+            });
+    },
+});
 
-
-export const selectAllCategory = (state: RootState) => state.categories.list
-
-export const loadCategories = createAsyncThunk("categories/load", async () => {
-    const res = await fetch("http://0.0.0.0:8000/realty/categories")
-    return res.json()
-})
-
-function transformCategory(category: string): Category {
-    return {
-        id: category,
-        displayName: category.split("-").map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(" ")
-    }
-}

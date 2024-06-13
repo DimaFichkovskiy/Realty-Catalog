@@ -1,5 +1,8 @@
-import {MouseEvent, useState} from "react";
+import {MouseEvent, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {AppDispatch, RootState} from "../store/store";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchCategories} from "../store/categories.store";
 
 interface SideBarProps {
     onCategoryClick: (category: string) => void;
@@ -9,14 +12,19 @@ function SideBar({ onCategoryClick }: SideBarProps) {
     const [selectedCategory, setSelectedCategory] = useState("");
     const navigate = useNavigate();
 
-    const categories = {
-        "apartment": "Квартири",
-        "commercial": "Кормерція",
-        "house": "Приватні будинки",
-        "land": "Земельні ділянки",
-        "secondary": "Вторинка",
-        "town": "Котеджні містечка"
-    };
+    const dispatch: AppDispatch = useDispatch();
+    const categories = useSelector((state: RootState) => state.categories.categories);
+    const status = useSelector((state: RootState) => state.categories.status);
+
+    useEffect(() => {
+        if (status === "idle") {
+            dispatch(fetchCategories());
+        }
+    }, [status, dispatch]);
+
+    console.log(categories);
+
+    
 
     const handleClick = (event: MouseEvent, category: string) => {
         event.preventDefault();
@@ -29,13 +37,13 @@ function SideBar({ onCategoryClick }: SideBarProps) {
     return (
         <>
             <ul className="list-categories">
-                {Object.entries(categories).map(([key, value]) => (
+                {categories.map((category) => (
                     <li
-                        className={`list-categories-item ${selectedCategory === key ? "selected": ""}`}
-                        onClick={(event) => handleClick(event, key)}
-                        key={key}
+                        key={category.name_en}
+                        className={`list-categories-item ${selectedCategory === category.name_en ? "selected": ""}`}
+                        onClick={(event) => handleClick(event, category.name_en)}
                     >
-                        {value}
+                        {category.name_urk}
                     </li>
                 ))}
             </ul>

@@ -13,46 +13,29 @@ interface RealtyPhoto {
 
 interface Realty {
     id: number,
-    realty_type: string,
     title: string,
     description: string,
     price: number,
     realty_id: number,
-    region: string,
-    condition: string,
-    street: string,
-    section: string,
-    floor: string,
-    square: string,
-    rooms: string,
-    builder: string,
-    rc: string,
-    turn: string,
-    entrance: string,
-    heating: string,
-    documents: string,
-    material_manufacture: string,
-    location_type: string,
-    settlement: string,
-    house_type: string,
-    land_area_object: string,
-    material_manufacture_2: string,
-    communications: string,
-    appointment: string,
-    features: string,
-    tenants_object: string,
-    comfort: string,
     realty_images: [RealtyPhoto]
 }
 
 
 function Catalog() {
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState<Realty[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const { categoryName } = useParams<{ categoryName?: string; }>();
     const { searchQuery } = useParams<{ searchQuery?: string; }>();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -98,24 +81,30 @@ function Catalog() {
             <div className="sidebar">
                 <SideBar onCategoryClick={handleCategorySelect} />
             </div>
-            <div className="catalog-content">
-                <div className="catalog-grid">
-                    {data.map(item => (
-                        <RealtyObjectCard realty_object={{
-                            "id": item.realty_id,
-                            "title": item.title,
-                            "description": item.description,
-                            "price": item.price,
-                            "photos": item.realty_images,
-                        }} key={item.realty_id} />
-                    ))}
+            {loading ? (
+                <div className="loading-overlay">
+                    <div className="loading-text">Loading...</div>
                 </div>
-                <Pagination
-                    totalPages={totalPages}
-                    currentPage={currentPage}
-                    onPageChange={handlePageChange}
-                />
-            </div>
+            ) : (
+                <div className="catalog-content">
+                    <div className="catalog-grid">
+                        {data.map(item => (
+                            <RealtyObjectCard realty_object={{
+                                "id": item.realty_id,
+                                "title": item.title,
+                                "description": item.description,
+                                "price": item.price,
+                                "photos": item.realty_images,
+                            }} key={item.realty_id} />
+                        ))}
+                    </div>
+                    <Pagination
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                    />
+                </div>
+            )}
         </div>
     )
 }
